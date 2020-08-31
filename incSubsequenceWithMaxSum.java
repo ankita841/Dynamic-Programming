@@ -3,33 +3,42 @@ import java.util.*;
 
 public class incSubsequenceWithMaxSum {
 	
-	static void printMSIS(int[] a, int n, int dp[])
+	static void printMSIS(int[] arr, int n)
 	{
-		List<List<Integer>> msis = new ArrayList<>();
-		for (int i = 0; i < n; i++)
-			msis.add(new ArrayList<Integer>());
+		List<List<Integer>> MSIS = new ArrayList<>();
+		for (int i = 0; i < n; i++) 
+			MSIS.add(i, new ArrayList<>());
 		
-		msis.get(0).add(a[0]);
-		
+		MSIS.get(0).add(arr[0]);
+
+		int[] sum = new int[n];
+		sum[0] = arr[0];
+
 		for (int i = 1; i < n; i++)
 		{
 			for (int j = 0; j < i; j++)
 			{
-				if (a[i] > a[j] && dp[j] > dp[i])
-					msis.set(i, new ArrayList<>(msis.get(j)));
+
+				if (sum[i] < sum[j] && arr[i] > arr[j])
+				{
+					MSIS.set(i, new ArrayList<>(MSIS.get(j)));
+					sum[i] = sum[j];
+				}
 			}
-			msis.get(i).add(a[i]);
-		}
-		int j = 0;
-		for (int i = 1; i < n; i++) {
-			if (dp[i] > dp[j]) {
-				j = i;
-			}
+
+			MSIS.get(i).add(arr[i]);
+
+			sum[i] += arr[i];
 		}
 
-		System.out.println(msis.get(j));
-		
+		int j = 0;
+		for (int i = 1; i < n; i++) 
+			if (sum[i] > sum[j]) 
+				j = i;
+
+		System.out.println(MSIS.get(j));		
 	}
+	
 	static int MSIS(int[] a, int n, int[] dp)
 	{
 		for (int i = 1; i < n; i++)
@@ -47,11 +56,16 @@ public class incSubsequenceWithMaxSum {
 	}
 
 	public static void main(String[] args) {
-		int[] arr = { 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11 };
-		int dp[] = new int[arr.length];
+		Scanner obj = new Scanner(System.in);
+		int n = obj.nextInt();
+		int[] arr = new int[n];
+		for (int i = 0; i < n; i++)
+			arr[i] = obj.nextInt();
+		int dp[] = new int[n];
 		dp[0] = arr[0];
-		System.out.println("Increasing Subsequence with Maximum Sum is : " + MSIS(arr, arr.length, dp));
-		printMSIS(arr, arr.length, dp);
+		System.out.println("Maximum sum of Increasing Subsequence is : " + MSIS(arr, n, dp));
+		System.out.print("Subsequence with Maximum sum is : ");
+		printMSIS(arr, n);
 	}
 
 }
