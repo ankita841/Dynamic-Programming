@@ -1,5 +1,5 @@
 package DP;
-
+import java.util.*;
 public class collectMaxPoints {
 	
 	static int countPoints(int a[][], int m, int n)
@@ -38,14 +38,13 @@ public class collectMaxPoints {
 	}
 
 	public static void main(String[] args) {
-		int[][] mat =
-			{
-				{  1,  1, -1,  1,  1 },
-				{  1,  0,  0, -1,  1 },
-				{  1,  1,  1,  1, -1 },
-				{ -1, -1,  1,  1,  1 },
-				{  1,  1, -1, -1,  1 }
-			};
+		Scanner obj = new Scanner(System.in);
+		int m = obj.nextInt();
+		int n = obj.nextInt();
+		int mat[][] = new int[m][n];
+		for (int i = 0; i < m; i++)
+			for (int j = 0; j < n; j++)
+				mat[i][j] = obj.nextInt();
 		System.out.println("Maximum points collected are : " + countPoints(mat, mat.length, mat[0].length));
 
 	}
